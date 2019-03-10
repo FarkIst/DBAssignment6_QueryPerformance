@@ -84,4 +84,18 @@ inner join orderdetails on orders.orderNumber = orderdetails.orderNumber
 order by offices.officeCode;
 ```
 Execution Plan: 
-Currently we're getting a BUG when we attempt to enter the Execution Plan, not certain what the issue is here, the bug is as followed: Exception: 'NoneType' object has no attribute 'do_relayout'
+* Currently we're getting a BUG when we attempt to enter the Execution Plan, not certain what the issue is here, the bug is as followed: Exception: 'NoneType' object has no attribute 'do_relayout'
+
+Instead we've decided to provide the Tubular Plan, as followed: 
+
+![alt text](https://github.com/FarkIst/DBAssignment6_QueryPerformance/blob/master/Exercise_3_Execution_Plan_Tubular.png)
+
+### EXERCISE 4 
+
+Query to return displayName and title of all posts which with the word "grounds" in the title: 
+
+``` sql
+SELECT displayName, title 
+FROM users INNER JOIN posts ON posts.OwnerUserId = users.id 
+WHERE title '%grounds%';
+```
