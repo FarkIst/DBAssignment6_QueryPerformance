@@ -52,3 +52,24 @@ Execution Plan:
 
 ![alt text](https://github.com/FarkIst/DBAssignment6_QueryPerformance/blob/master/Exercise_2_Execution_Plan.png)
 
+### EXERCISE 3 
+
+Group by query:
+
+``` sql
+select offices.officeCode, sum(orderdetails.priceEach), max(payments.amount)
+from offices
+inner join employees on offices.officeCode = employees.officeCode
+inner join customers on customers.salesRepEmployeeNumber = employees.employeeNumber
+inner join payments on payments.customerNumber = customers.customerNumber
+inner join orders on orders.customerNumber = customers.customerNumber
+inner join orderdetails on orders.orderNumber = orderdetails.orderNumber
+group by offices.officeCode
+order by offices.officeCode;
+```
+Execution Plan:
+
+![alt text](https://github.com/FarkIst/DBAssignment6_QueryPerformance/blob/master/Exercise_3_Execution_Plan_Group_By.png)
+
+
+
