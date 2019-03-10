@@ -4,6 +4,8 @@
 
 Given query:
 
+The main performance problem is that the there are no indexes on the city columns.
+
 ``` sql
 
 select customers.customerName,
@@ -12,7 +14,7 @@ select customers.customerName,
 from customers, employees, offices
 where customers.salesRepEmployeeNumber = employees.employeeNumber and
  employees.officeCode = offices.officeCode and
- customers.city
+ customers.city = offices.city
 
 ```
 
@@ -22,9 +24,15 @@ Execution Plan:
 
 ### EXERCISE 2 
 
-The query with better performance. Please reformat this text. (Arek or Vlad)
+The optimized query:
+
+We create indexes on the city columns of both the customers and offices tables to make the look up faster.
 
 ``` sql
+
+create index city on customers(city);
+
+create index city on offices(city);
 
 with customer_rep as (
  select customers.customerName as shopName,
@@ -40,4 +48,28 @@ from customer_rep
 where shopCity = officeCity
 
 ```
+Execution Plan:
+
+![alt text](https://github.com/FarkIst/DBAssignment6_QueryPerformance/blob/master/Exercise_2_Execution_Plan.png)
+
+### EXERCISE 3 
+
+Group by query:
+
+``` sql
+select offices.officeCode, sum(orderdetails.priceEach), max(payments.amount)
+from offices
+inner join employees on offices.officeCode = employees.officeCode
+inner join customers on customers.salesRepEmployeeNumber = employees.employeeNumber
+inner join payments on payments.customerNumber = customers.customerNumber
+inner join orders on orders.customerNumber = customers.customerNumber
+inner join orderdetails on orders.orderNumber = orderdetails.orderNumber
+group by offices.officeCode
+order by offices.officeCode;
+```
+Execution Plan:
+
+![alt text](https://github.com/FarkIst/DBAssignment6_QueryPerformance/blob/master/Exercise_3_Execution_Plan_Group_By.png)
+
+
 
