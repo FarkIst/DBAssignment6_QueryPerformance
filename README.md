@@ -71,5 +71,16 @@ Execution Plan:
 
 ![alt text](https://github.com/FarkIst/DBAssignment6_QueryPerformance/blob/master/Exercise_3_Execution_Plan_Group_By.png)
 
+Windowing query:
 
+``` sql
+select distinct offices.officeCode, sum(orderdetails.priceEach) over (partition by offices.officeCode),max(payments.amount) over (partition by offices.officeCode)
+from offices
+inner join employees on offices.officeCode = employees.officeCode
+inner join customers on customers.salesRepEmployeeNumber = employees.employeeNumber
+inner join payments on payments.customerNumber = customers.customerNumber
+inner join orders on orders.customerNumber = customers.customerNumber
+inner join orderdetails on orders.orderNumber = orderdetails.orderNumber
+order by offices.officeCode;
+```
 
