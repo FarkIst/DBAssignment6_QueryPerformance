@@ -83,4 +83,5 @@ inner join orders on orders.customerNumber = customers.customerNumber
 inner join orderdetails on orders.orderNumber = orderdetails.orderNumber
 order by offices.officeCode;
 ```
-
+Execution Plan: 
+Currently we're getting a BUG when we attempt to enter the Execution Plan, not certain what the issue is here, the bug is as followed: Exception: 'NoneType' object has no attribute 'do_relayout'
